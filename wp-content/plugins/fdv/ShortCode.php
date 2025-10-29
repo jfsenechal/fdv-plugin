@@ -6,7 +6,7 @@ class ShortCode
 {
     public function __construct()
     {
-        add_shortcode('fdv_list_plants', [$this, 'lesplantes']);
+        add_shortcode('fdv_list_plants', [$this, 'listPlants']);
     }
 
     /**
@@ -14,7 +14,7 @@ class ShortCode
      *
      * @return string
      */
-    public function lesplantes(): string
+    public function listPlants(): string
     {
         $plants = FdvRepository::getPlants();
 
