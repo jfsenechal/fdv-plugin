@@ -6,7 +6,7 @@ class ShortCode
 {
     public function __construct()
     {
-        add_shortcode('lesplantes', [$this, 'lesplantes']);
+        add_shortcode('fdv_list_plants', [$this, 'lesplantes']);
     }
 
     /**
