@@ -66,31 +66,41 @@ The plugin connects to a local API service:
 
 The API URL is configured via the `FDV_API_URL` environment variable, which should be set to `http://localhost:8000/api`.
 
-### Plugin Structure (Recommended)
+### Plugin Structure (Current)
 
 ```
 wp-content/plugins/fdv/
-├── fdv.php                    # Main plugin file (plugin header and initialization)
+├── FdvPlugin.php              # Main plugin file (plugin header and initialization)
+├── FdvRepository.php          # API data repository
+├── FdvRouter.php              # Router (if applicable)
+├── ShortCode.php              # Shortcode handler
 ├── includes/
-│   ├── class-fdv-activator.php    # Activation hooks
-│   ├── class-fdv-deactivator.php  # Deactivation hooks
-│   ├── class-fdv-loader.php       # Hook loader
-│   └── class-fdv.php              # Main plugin class
-├── admin/
-│   ├── class-fdv-admin.php        # Admin-specific functionality
-│   ├── css/                       # Admin styles
-│   └── js/                        # Admin scripts
-├── public/
-│   ├── class-fdv-public.php       # Public-facing functionality
-│   ├── css/                       # Public styles
-│   └── js/                        # Public scripts
-├── blocks/                        # Custom Gutenberg blocks (if needed)
-├── shortcodes/                    # Custom shortcodes (if needed)
-├── widgets/                       # Custom widgets (if needed)
-├── post-types/                    # Custom post types
-├── taxonomies/                    # Custom taxonomies
-└── languages/                     # Translation files
+│   └── template-functions.php # Template helper functions
+└── templates/                 # Template files
+    ├── README.md              # Template documentation
+    ├── plants-grid.php        # Plants grid layout
+    └── plant-card.php         # Individual plant card
 ```
+
+### Template System
+
+The plugin uses a WordPress-style template system that separates logic from presentation:
+
+**Loading Templates:**
+```php
+fdv_get_template('plants-grid.php', [
+    'plants' => $plants_data
+]);
+```
+
+**Template Hierarchy** (checked in order):
+1. `wp-content/themes/emerge-preschool/fdv/[template].php` (theme override)
+2. `wp-content/themes/emerge-preschool/fdv-templates/[template].php` (theme override)
+3. `wp-content/plugins/fdv/templates/[template].php` (default)
+
+**Helper Functions:**
+- `fdv_get_template($template_name, $args, $echo)` - Load template with variables
+- `fdv_get_plant_image_url($plant)` - Get plant image URL or placeholder
 
 ### Plugin File Header (Required)
 
