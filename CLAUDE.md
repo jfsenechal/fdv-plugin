@@ -72,14 +72,14 @@ The API URL is configured via the `FDV_API_URL` environment variable, which shou
 wp-content/plugins/fdv/
 ├── FdvPlugin.php              # Main plugin file (plugin header and initialization)
 ├── FdvRepository.php          # API data repository
-├── FdvRouter.php              # Router (if applicable)
+├── FdvRouter.php              # Custom URL routing
+├── FdvTemplate.php            # Template helper functions
 ├── ShortCode.php              # Shortcode handler
-├── includes/
-│   └── template-functions.php # Template helper functions
 └── templates/                 # Template files
     ├── README.md              # Template documentation
     ├── plants-grid.php        # Plants grid layout
-    └── plant-card.php         # Individual plant card
+    ├── plant-card.php         # Individual plant card
+    └── single-plant.php       # Single plant page template
 ```
 
 ### Template System
@@ -115,14 +115,23 @@ The plugin implements custom URL routing for single plant pages via `FdvRouter`:
 - `single_plant` - Flag to indicate single plant page (value: 1)
 - `codePlant` - Plant code/slug/ID from the URL
 
-**Template Resolution:**
-1. Checks for `single_plant.php` in active theme directory
-2. Falls back to default template if not found
+**Template Resolution** (checked in order):
+1. `wp-content/themes/emerge-preschool/single_plant.php` (theme override)
+2. `wp-content/themes/emerge-preschool/fdv/single-plant.php` (theme override)
+3. `wp-content/plugins/fdv/templates/single-plant.php` (default plugin template)
 
-**Accessing Plant Code in Template:**
-```php
-$plantCode = get_query_var('codePlant');
-// Use $plantCode to fetch plant data from API
+**Single Plant Template:**
+The plugin provides a complete single plant page template at `templates/single-plant.php` that:
+- Fetches plant data from API using `FdvRepository::getPlantByCode()`
+- Displays plant image, name, latin name, category
+- Shows description if available
+- Displays photo gallery if multiple photos exist
+- Shows additional information (height, width, flowering period, etc.)
+- Handles 404 errors when plant not found
+
+**API Endpoint for Single Plant:**
+```
+GET http://localhost:8000/api/plants/{plant-code}
 ```
 
 **Important:** After modifying routing rules, flush rewrite rules:

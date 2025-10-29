@@ -44,17 +44,25 @@ class FdvRouter
     {
         // Check if this is our custom route
         if (get_query_var(self::SINGLE_PLANT)) {
-            $codeCgt = get_query_var(self::PARAM_PLANT);
+            $codePlant = get_query_var(self::PARAM_PLANT);
 
-            // Check if codeCgt exists
-            if ($codeCgt) {
-                // Look for template in theme directory
-                $custom_template = locate_template('single_plant.php');
+            // Check if plant code exists
+            if ($codePlant) {
+                // First, look for template in theme directory (allows theme override)
+                $theme_template = locate_template(['single_plant.php', 'fdv/single-plant.php']);
 
-                if ($custom_template) {
-                    return $custom_template;
+                if ($theme_template) {
+                    return $theme_template;
+                }
+
+                // Fall back to plugin template
+                $plugin_template = FDV_PLUGIN_DIR.'templates/single-plant.php';
+
+                if (file_exists($plugin_template)) {
+                    return $plugin_template;
                 }
             }
+
         }
 
         return $template;
