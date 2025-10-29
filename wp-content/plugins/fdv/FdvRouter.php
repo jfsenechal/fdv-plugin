@@ -25,7 +25,7 @@ class FdvRouter
     function add_rewrite_rule(): void
     {
         add_rewrite_rule(
-            self::ROUTE.'([a-zA-Z0-9-]+)[/]?$',
+            '^'.self::ROUTE.'/([a-zA-Z0-9-]+)/?$',
             'index.php?single_plant=1&'.self::PARAM_PLANT.'=$matches[1]',  // Query vars
             'top'  // Priority
         );
