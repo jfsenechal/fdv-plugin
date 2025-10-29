@@ -5,21 +5,24 @@
  * This template displays a single plant page.
  * URL: /lesplantes/{plant-code}
  *
+ * This template is designed for FSE (Full Site Editing) themes.
+ *
  * @package Fdv\Plugin
  */
 
 use Fdv\Plugin\FdvRepository;
 use Fdv\Plugin\FdvTemplate;
 
-get_header();
-
 // Get plant code from URL
 $plantCode = get_query_var('codePlant');
 
 if (empty($plantCode)) {
     // No plant code provided - show 404
-    get_template_part('404');
-    get_footer();
+    global $wp_query;
+    $wp_query->set_404();
+    status_header(404);
+    // Let WordPress handle 404 display
+    include(get_query_template('404'));
     exit;
 }
 
@@ -28,11 +31,20 @@ $plant = FdvRepository::getPlantByCode($plantCode);
 
 if (empty($plant)) {
     // Plant not found - show 404
+    global $wp_query;
+    $wp_query->set_404();
     status_header(404);
-    get_template_part('404');
-    get_footer();
+    include(get_query_template('404'));
     exit;
 }
+
+// Set document title for SEO
+add_filter('pre_get_document_title', function() use ($plant) {
+    return esc_html($plant['french_name'] ?? 'Plante') . ' - ' . get_bloginfo('name');
+}, 10);
+
+// For FSE themes, we need to render within the site editor context
+block_template_part('header');
 
 // Plant data available
 $frenchName = esc_html($plant['french_name'] ?? 'Nom inconnu');
@@ -199,4 +211,4 @@ $imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
 </main>
 
 <?php
-get_footer();
+block_template_part('footer');
