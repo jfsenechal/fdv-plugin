@@ -17,6 +17,7 @@ $frenchName = esc_html($plant['french_name'] ?? 'Nom inconnu');
 $latinName = esc_html($plant['latin_name'] ?? '');
 $category = esc_html($plant['category'] ?? '');
 $imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
+$plantUrl = FdvTemplate::fdv_get_plant_url($plant);
 ?>
 
 <!-- wp:column -->
@@ -49,6 +50,22 @@ $imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
                 <p class="has-text-align-center has-base-color has-text-color has-link-color has-extra-small-font-size">
                     <?php echo sprintf(__('Catégorie : %s', 'fdv'), $category); ?>
                 </p>
+            <?php endif; ?>
+
+            <?php if (!empty($plantUrl)): ?>
+                <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|40"}}}} -->
+                <div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--40)">
+                    <!-- wp:button {"backgroundColor":"base","textColor":"contrast","style":{"border":{"radius":"50px"}}} -->
+                    <div class="wp-block-button">
+                        <a class="wp-block-button__link has-contrast-color has-base-background-color has-text-color has-background wp-element-button"
+                           href="<?php echo esc_url($plantUrl); ?>"
+                           style="border-radius:50px;padding:0.75rem 1.5rem;">
+                            <?php esc_html_e('Voir les détails', 'fdv'); ?>
+                        </a>
+                    </div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:buttons -->
             <?php endif; ?>
         </div>
 

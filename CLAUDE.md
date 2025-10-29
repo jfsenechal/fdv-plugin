@@ -99,8 +99,36 @@ fdv_get_template('plants-grid.php', [
 3. `wp-content/plugins/fdv/templates/[template].php` (default)
 
 **Helper Functions:**
-- `fdv_get_template($template_name, $args, $echo)` - Load template with variables
-- `fdv_get_plant_image_url($plant)` - Get plant image URL or placeholder
+- `FdvTemplate::fdv_get_template($template_name, $args, $echo)` - Load template with variables
+- `FdvTemplate::fdv_get_plant_image_url($plant)` - Get plant image URL or placeholder
+- `FdvTemplate::fdv_get_plant_url($plant)` - Get URL for single plant page
+
+### URL Routing System
+
+The plugin implements custom URL routing for single plant pages via `FdvRouter`:
+
+**URL Pattern:** `/lesplantes/{plant-code}`
+
+**Example:** `https://fonddesvaulx.be/lesplantes/rose-123`
+
+**Query Variables:**
+- `single_plant` - Flag to indicate single plant page (value: 1)
+- `codePlant` - Plant code/slug/ID from the URL
+
+**Template Resolution:**
+1. Checks for `single_plant.php` in active theme directory
+2. Falls back to default template if not found
+
+**Accessing Plant Code in Template:**
+```php
+$plantCode = get_query_var('codePlant');
+// Use $plantCode to fetch plant data from API
+```
+
+**Important:** After modifying routing rules, flush rewrite rules:
+```bash
+wp rewrite flush
+```
 
 ### Plugin File Header (Required)
 

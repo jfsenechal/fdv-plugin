@@ -87,4 +87,23 @@ class FdvTemplate
 
         return 'https://picsum.photos/seed/plant-'.$plantId.'/300/300';
     }
+
+    /**
+     * Get plant single page URL
+     *
+     * @param array $plant Plant data
+     * @return string Plant URL
+     */
+    public static function fdv_get_plant_url(array $plant): string
+    {
+        // Get plant code/slug from various possible fields
+        $plantCode = $plant['code'] ?? $plant['slug'] ?? $plant['id'] ?? '';
+
+        if (empty($plantCode)) {
+            return '';
+        }
+
+        // Build URL using the route from FdvRouter
+        return home_url('/'.FdvRouter::ROUTE.'/'.$plantCode);
+    }
 }
