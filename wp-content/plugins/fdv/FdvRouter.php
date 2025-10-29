@@ -19,7 +19,6 @@ class FdvRouter
 
     function flush_rules(): void
     {
-        $this->add_rewrite_rule();
         flush_rewrite_rules();
     }
 
