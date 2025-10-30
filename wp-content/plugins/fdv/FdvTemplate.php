@@ -10,9 +10,9 @@ class FdvTemplate
      * @param string $template_name Template file name (relative to templates/)
      * @param array $args Variables to pass to template
      * @param bool $echo Whether to echo or return output
-     * @return string|void
+     * @return string|null
      */
-    public static function fdv_get_template($template_name, $args = [], $echo = true)
+    public static function fdv_get_template($template_name, $args = [], $echo = true): string|null
     {
         $template_path = FDV_PLUGIN_DIR.'templates/'.$template_name;
 
