@@ -25,7 +25,7 @@ class ShortCode
 
         // Use output buffering to capture template output
         ob_start();
-        FdvTemplate::fdv_get_template('plants-grid.php', [
+        FdvTemplate::fdv_get_template('plants-list.php', [
             'plants' => $plants['data'],
         ]);
 
