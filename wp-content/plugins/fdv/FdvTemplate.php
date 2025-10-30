@@ -86,7 +86,7 @@ class FdvTemplate
         // Using Lorem Picsum with plant ID as seed for consistent images
         $plantId = $plant['id'] ?? rand(1, 1000);
 
-        return 'https://picsum.photos/seed/plant-'.$plantId.'/300/300';
+        return 'https://picsum.photos/seed/plant-'.$plantId.'/600/600';
     }
 
     /**
