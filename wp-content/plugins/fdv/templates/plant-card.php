@@ -3,7 +3,7 @@
  * Template for displaying a single plant card
  *
  * Available variables:
- * @var array  $plant   Plant data
+ * @var array $plant Plant data
  * @var string $bgColor Background color for the card
  */
 
@@ -15,60 +15,48 @@ if (empty($plant)) {
 
 $frenchName = esc_html($plant['french_name'] ?? 'Nom inconnu');
 $latinName = esc_html($plant['latin_name'] ?? '');
-$category = esc_html($plant['category'] ?? '');
+$category = esc_html($plant['conservation_status'] ?? '');
+$description = esc_html($plant['description'] ?? '');
+$id = (int)$plant['id'] ?? 0;
 $imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
 $plantUrl = FdvTemplate::fdv_get_plant_url($plant);
 ?>
+<!-- wp:column {"width":"33.33%","style":{"spacing":{"blockGap":"0"}}} -->
+<div class="wp-block-column" style="flex-basis:33.33%">
+    <!-- wp:group {"style":{"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}},"border":{"radius":"10px"}},"layout":{"type":"constrained","justifyContent":"center"}} -->
+    <div class="wp-block-group"
+         style="border-radius:10px;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
+        <!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":{"topLeft":"20px","topRight":"20px"}}}} -->
+        <figure class="wp-block-image size-full has-custom-border">
+            <a href="<?php echo esc_url($plantUrl) ?>">
+                <img
+                        src="<?php echo esc_url($imageUrl); ?>"
+                        alt="" style="border-top-left-radius:20px;border-top-right-radius:20px"/>
+            </a>
+        </figure>
+        <!-- /wp:image -->
+    </div>
+    <!-- /wp:group -->
 
-<!-- wp:column -->
-<div class="wp-block-column">
-    <!-- wp:group {"style":{"color":{"background":"<?php echo esc_attr($bgColor); ?>"},"border":{"radius":"20px"},"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}}},"layout":{"type":"constrained"}} -->
-    <div class="wp-block-group has-background" style="border-radius:20px;background-color:<?php echo esc_attr($bgColor); ?>;padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--40)">
+    <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"0"},"color":{"background":"#ffc000"},"border":{"radius":{"bottomLeft":"20px","bottomRight":"20px"}}},"layout":{"type":"constrained","justifyContent":"left"}} -->
+    <div class="wp-block-group has-background"
+         style="border-bottom-left-radius:20px;border-bottom-right-radius:20px;background-color:#ffc000;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)">
+        <!-- wp:heading {"textAlign":"left","style":{"typography":{"lineHeight":"1.1"},"elements":{"link":{"color":{"text":"var:preset|color|base"}}},"spacing":{"margin":{"bottom":"var:preset|spacing|40"}}},"textColor":"base","fontSize":"large"} -->
+        <h2 class="wp-block-heading has-text-align-left has-base-color has-text-color has-link-color has-large-font-size"
+            style="margin-bottom:var(--wp--preset--spacing--40);line-height:1.1">
+            <a href="<?php echo esc_url($plantUrl) ?>" data-type="page" data-id="<?php echo $id ?>">
+                <?php echo $frenchName ?>
+            </a>
+        </h2>
+        <!-- /wp:heading -->
 
-        <!-- Image section -->
-        <div class="wp-block-group" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)">
-            <div class="wp-block-group has-base-background-color has-background" style="border-style:none;border-width:0px;border-radius:100px;margin-top:var(--wp--preset--spacing--30);margin-bottom:var(--wp--preset--spacing--30);padding:var(--wp--preset--spacing--50);display:flex;align-items:center;justify-content:center;width:120px;height:120px;margin-left:auto;margin-right:auto;overflow:hidden;">
-                <img src="<?php echo esc_url($imageUrl); ?>"
-                     alt="<?php echo esc_attr($frenchName); ?>"
-                     style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
-            </div>
-        </div>
+        <!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|base"}}}},"textColor":"base","fontSize":"extra-small"} -->
+        <p class="has-base-color has-text-color has-link-color has-extra-small-font-size"><?php echo $category ?></p>
+        <!-- /wp:paragraph -->
 
-        <!-- Text content -->
-        <div class="wp-block-group">
-            <h2 class="wp-block-heading has-text-align-center has-base-color has-text-color has-link-color has-large-font-size" style="line-height:1.1">
-                <?php echo $frenchName; ?>
-            </h2>
-
-            <?php if (!empty($latinName)): ?>
-                <p class="has-text-align-center has-base-color has-text-color has-link-color" style="font-style:italic;font-size:0.9em;">
-                    <?php echo $latinName; ?>
-                </p>
-            <?php endif; ?>
-
-            <?php if (!empty($category)): ?>
-                <p class="has-text-align-center has-base-color has-text-color has-link-color has-extra-small-font-size">
-                    <?php echo sprintf(__('Catégorie : %s', 'fdv'), $category); ?>
-                </p>
-            <?php endif; ?>
-
-            <?php if (!empty($plantUrl)): ?>
-                <!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|40"}}}} -->
-                <div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--40)">
-                    <!-- wp:button {"backgroundColor":"base","textColor":"contrast","style":{"border":{"radius":"50px"}}} -->
-                    <div class="wp-block-button">
-                        <a class="wp-block-button__link has-contrast-color has-base-background-color has-text-color has-background wp-element-button"
-                           href="<?php echo esc_url($plantUrl); ?>"
-                           style="border-radius:50px;padding:0.75rem 1.5rem;">
-                            <?php esc_html_e('Voir les détails', 'fdv'); ?>
-                        </a>
-                    </div>
-                    <!-- /wp:button -->
-                </div>
-                <!-- /wp:buttons -->
-            <?php endif; ?>
-        </div>
-
+        <!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|base"}}}},"textColor":"base","fontSize":"extra-small"} -->
+        <p class="has-base-color has-text-color has-link-color has-extra-small-font-size"><?php echo $description ?></p>
+        <!-- /wp:paragraph -->
     </div>
     <!-- /wp:group -->
 </div>
