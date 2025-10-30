@@ -41,7 +41,7 @@ $frenchName = $plant['french_name'] ?? 'Nom inconnu';
 
         <!-- BEGIN POST CONTENT FROM EDITOR -->
         <?php
-        FdvTemplate::fdv_get_template('plant-code.php', [
+        FdvTemplate::fdv_get_template('plant-card.php', [
                 'plant' => $plant,
         ]);
         ?>

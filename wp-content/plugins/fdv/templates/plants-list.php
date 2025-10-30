@@ -46,7 +46,7 @@ if (empty($plants)) {
             <?php
             foreach ($chunk as $index => $plant):
                 // Load plant card template
-                FdvTemplate::fdv_get_template('plant-card.php', [
+                FdvTemplate::fdv_get_template('plant-inline.php', [
                         'plant' => $plant,
                 ]);
             endforeach;
