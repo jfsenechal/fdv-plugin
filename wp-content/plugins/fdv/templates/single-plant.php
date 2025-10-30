@@ -38,15 +38,20 @@ if (empty($plant)) {
     exit;
 }
 $plant = $plant['data'];
+// Extract plant data
+$frenchName = esc_html($plant['french_name'] ?? 'Nom inconnu');
+$latinName = esc_html($plant['latin_name'] ?? '');
+$category = esc_html($plant['category'] ?? '');
+$description = wp_kses_post($plant['description'] ?? '');
+$imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
+$height = esc_html($plant['height'] ?? '');
+$width = esc_html($plant['width'] ?? '');
+$floweringPeriod = esc_html($plant['flowering_period'] ?? '');
+$photos = $plant['photos'] ?? [];
 // Set document title for SEO
-add_filter('pre_get_document_title', function() use ($plant) {
-    return esc_html($plant['french_name'] ?? 'Plante') . ' - ' . get_bloginfo('name');
+add_filter('pre_get_document_title', function () use ($plant) {
+    return esc_html($plant['french_name'] ?? 'Plante').' - '.get_bloginfo('name');
 }, 10);
-block_header_area();
-get_header();
-?>
-<?php
-// For FSE themes, we need to render within the site editor context
 
 // Plant data available
 $frenchName = esc_html($plant['french_name'] ?? 'Nom inconnu');
@@ -55,16 +60,11 @@ $category = esc_html($plant['category'] ?? '');
 $description = wp_kses_post($plant['description'] ?? '');
 $imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
 
- $content = FdvTemplate::fdv_get_template('test.php', [
-            'plant' => $plant,
-        ], false);
+$content = FdvTemplate::fdv_get_template('plant-content.php', [
+        'plant' => $plant,
+], false);
 
-        $content = apply_filters('the_content', $content);
-        $content = str_replace(']]>', ']]&gt;', $content);
-        echo $content;
-?>
+$content = apply_filters('the_content', $content);
+$content = str_replace(']]>', ']]&gt;', $content);
 
-
-<?php
-block_footer_area();
-get_footer();
+echo $content;
