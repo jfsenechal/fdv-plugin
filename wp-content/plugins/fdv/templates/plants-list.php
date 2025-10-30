@@ -32,22 +32,23 @@ if (empty($plants)) {
     </div>
     <!-- /wp:group -->
 
-    <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|60","left":"var:preset|spacing|60"}}}} -->
-    <div class="wp-block-columns">
-        <?php
 
-        // Grid container - split into rows of 3
-        $chunks = array_chunk($plants, 3);
-
-        foreach ($chunks as $chunk):
-            // Load plant card template
-            FdvTemplate::fdv_get_template('plant-card2.php', [
-                    'plant' => null,
-                    'bgColor' => null,
-            ]);
-        endforeach;
-        ?>
-    </div>
-    <!-- /wp:columns -->
+    <?php
+    // Grid container - split into rows of 4
+    $chunks = array_chunk($plants, 3);
+    foreach ($chunks as $chunk): ?>
+        <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|60","left":"var:preset|spacing|60"}}}} -->
+        <div class="wp-block-columns">
+            <?php
+            foreach ($chunk as $index => $plant):
+                // Load plant card template
+                FdvTemplate::fdv_get_template('plant-card2.php', [
+                        'plant' => $plant,
+                ]);
+            endforeach;
+            ?>
+        </div>
+        <!-- /wp:columns -->
+    <?php endforeach; ?>
 </div>
 <!-- /wp:group -->
