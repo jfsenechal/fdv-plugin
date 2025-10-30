@@ -12,7 +12,7 @@ class FdvTemplate
      * @param bool $echo Whether to echo or return output
      * @return string|null
      */
-    public static function fdv_get_template($template_name, $args = [], $echo = true): string|null
+    public static function fdv_get_template($template_name, $args = [], $echo = true)
     {
         $template_path = FDV_PLUGIN_DIR.'templates/'.$template_name;
 

@@ -24,10 +24,14 @@ class ShortCode
         }
 
         // Use output buffering to capture template output
-        ob_start();
-        FdvTemplate::fdv_get_template('plants-list.php', [
+        //   ob_start();
+        $content = FdvTemplate::fdv_get_template('plants-list.php', [
             'plants' => $plants['data'],
-        ]);
+        ], false);
+
+        $content = apply_filters('the_content', $content);
+        $content = str_replace(']]>', ']]&gt;', $content);
+        echo $content;
 
         return ob_get_clean();
     }
