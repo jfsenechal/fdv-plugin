@@ -15,8 +15,8 @@ if (empty($plant)) {
 
 $frenchName = esc_html($plant['french_name'] ?? 'Nom inconnu');
 $latinName = esc_html($plant['latin_name'] ?? '');
-$category = esc_html($plant['conservation_status'] ?? '');
-$description = esc_html($plant['description'] ?? '');
+$conservation_status = strip_tags($plant['conservation_status'] ?? '');
+$description = strip_tags($plant['description'] ?? '');
 $id = (int)$plant['id'] ?? 0;
 $imageUrl = FdvTemplate::fdv_get_plant_image_url($plant);
 $plantUrl = FdvTemplate::fdv_get_plant_url($plant);
@@ -51,7 +51,7 @@ $plantUrl = FdvTemplate::fdv_get_plant_url($plant);
         <!-- /wp:heading -->
 
         <!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|base"}}}},"textColor":"base","fontSize":"extra-small"} -->
-        <p class="has-base-color has-text-color has-link-color has-extra-small-font-size"><?php echo $category ?></p>
+        <p class="has-base-color has-text-color has-link-color has-extra-small-font-size"><?php echo $conservation_status ?></p>
         <!-- /wp:paragraph -->
 
         <!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|base"}}}},"textColor":"base","fontSize":"extra-small"} -->
