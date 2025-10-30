@@ -1,9 +1,11 @@
 <?php
 /**
- * Template for displaying plants grid
+ * Title: Classes
+ * Slug: emerge-preschool/classes
+ * Categories: theme
  *
- * Available variables:
- * @var array $plants Array of plant data
+ * @package emerge-preschool
+ * @since 1.0.0
  */
 
 use Fdv\Plugin\FdvTemplate;
@@ -21,13 +23,15 @@ if (empty($plants)) {
         <!-- wp:heading {"textAlign":"center","level":6,"style":{"border":{"width":"0px","style":"none"},"layout":{"selfStretch":"fit","flexSize":null},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"}},"color":{"text":"#ffc000"}},"fontSize":"large"} -->
         <h6 class="wp-block-heading has-text-align-center has-text-color has-large-font-size"
             style="border-style:none;border-width:0px;color:#ffc000;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
-            Popular Classes</h6>
+            <?php esc_html_e('Nos Plantes', 'fdv'); ?>
+        </h6>
         <!-- /wp:heading -->
 
         <!-- wp:heading {"textAlign":"center","level":3,"style":{"typography":{"lineHeight":"1.1"},"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|40"}},"elements":{"link":{"color":{"text":"var:preset|color|base"}}}},"textColor":"base","fontSize":"xx-large"} -->
         <h3 class="wp-block-heading has-text-align-center has-base-color has-text-color has-link-color has-xx-large-font-size"
             style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--40);line-height:1.1">
-            Choose Classes For Your Child</h3>
+         <?php esc_html_e('Découvrez Notre Collection', 'fdv'); ?>
+        </h3>
         <!-- /wp:heading -->
     </div>
     <!-- /wp:group -->
